@@ -85,10 +85,16 @@ public class DirectoryAnalyser {
         File[] names=directory.listFiles(new FilterFilesByStringNameNotDirs(fileToFilter));
 
         assert names!=null;
+        if(names.length==0){
+            System.out.printf(Messages.FILE_DOES_NOT_EXIST_CONTAINING_STRING,fileToFilter);
+            return;
+        }
         for (File name:names) {
                 System.out.println(name.getName());
         }
     }
+
+
     public void checkFilePresence() throws IOException {
         if (checkNullableStreams()){
             System.out.println(Messages.NO_STREAMS);
