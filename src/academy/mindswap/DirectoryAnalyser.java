@@ -63,7 +63,13 @@ public class DirectoryAnalyser {
         }
         File directory=askForDirectory();
         String fileToFilter = getUserInput("What's the filename to filter");
-        File[] names=directory.listFiles(new FilterFilesByStringName(fileToFilter));
+       // File[] names=directory.listFiles(new FilterFilesByStringName(fileToFilter));
+        File[] names=directory.listFiles(new FileFilter() {
+            @Override
+            public boolean accept(File pathname) {
+                return pathname.getName().startsWith(fileToFilter);
+            }
+        });
 
         assert names!=null;
         if(names.length==0){
