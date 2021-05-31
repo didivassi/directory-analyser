@@ -64,10 +64,10 @@ public class DirectoryAnalyser {
         File directory=askForDirectory();
         String fileToFilter = getUserInput("What's the filename to filter");
        // File[] names=directory.listFiles(new FilterFilesByStringName(fileToFilter));
-        File[] names=directory.listFiles(new FileFilter() {  //soraia's way
+        File[] names=directory.listFiles(new FilenameFilter() {  //soraia's way
             @Override
-            public boolean accept(File pathname) {
-                return pathname.getName().startsWith(fileToFilter);
+            public boolean accept(File dir, String name) {
+                return name.startsWith(fileToFilter);
             }
         });
 
@@ -88,7 +88,13 @@ public class DirectoryAnalyser {
         }
         File directory=askForDirectory();
         String fileToFilter = getUserInput("What's the filename to filter");
-        File[] names=directory.listFiles(new FilterFilesByStringNameNotDirs(fileToFilter));
+       // File[] names=directory.listFiles(new FilterFilesByStringNameNotDirs(fileToFilter));
+        File[] names=directory.listFiles(new FileFilter() {
+            @Override
+            public boolean accept(File pathname) {
+                return !pathname.isDirectory() && pathname.getName().startsWith(fileToFilter);
+            }
+        });
 
         assert names!=null;
         if(names.length==0){
